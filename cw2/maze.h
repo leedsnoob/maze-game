@@ -5,7 +5,7 @@
 #define SUCCESS 0
 #define ARG_ERROR 1
 #define FILE_ERROR 2
-#define EXIT_MAZE_ERROR 3
+#define MAZE_ERROR 3
 #define UNSUCCESS 100
 #define ERROR_VALUE -1
 
