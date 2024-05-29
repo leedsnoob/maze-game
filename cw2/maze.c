@@ -22,8 +22,11 @@ int main(int argc, char *argv[]) {
     initializePlayerPosition(&player, &maze); // Initialize player placement, placing the player at the beginning of the maze.
  int inputChar;
     do {
-        printf("Enter your move (WASD to move, Q to quit,M to show map,Inputting multiple commands at once will only execute the first one): ");
+        printf("Enter your move (WASD to move, Q to quit, M to show map, Inputting multiple commands at once will only execute the first one): ");
         inputChar = getchar();
+        if (inputChar == '\n') {
+            continue; 
+        }
         while ((getchar()) != '\n'); 
         inputChar = toupper(inputChar);
         int newX = player.x, newY = player.y; 
@@ -41,7 +44,7 @@ int main(int argc, char *argv[]) {
                 newX += 1;
                 break;
             case 'M':
-                showMap(&maze, &player); //Shows the maze map and the player's current location
+                showMap(&maze, &player); // Shows the maze map and the player's current location
                 continue;
             case 'Q':
                 printf("Exiting game.\n");
@@ -50,9 +53,9 @@ int main(int argc, char *argv[]) {
                 printf("Invalid input!\n");
                 continue;
         }
-        if (isMoveValid(&maze, newX, newY)) {  //Check that the player is trying to make a legal move, such as moving outside a wall or maze.
-            updatePlayerPosition(&player, newX, newY); //If the move is legal, update the player's position;
-            if (checkIfExitReached(&player, &maze)) {  //Check if the player has reached the exit of the maze, and if so, return a marker indicating the game is over.
+        if (isMoveValid(&maze, newX, newY)) {  // Check that the player is trying to make a legal move, such as moving outside a wall or maze.
+            updatePlayerPosition(&player, newX, newY); // If the move is legal, update the player's position;
+            if (checkIfExitReached(&player, &maze)) {  // Check if the player has reached the exit of the maze, and if so, return a marker indicating the game is over.
                 printf("Congratulations, you've reached the exit!\n");
                 break;
             }
@@ -60,7 +63,8 @@ int main(int argc, char *argv[]) {
             printf("Move is not valid!\n");
         }
     } while (1);
-freeMaze(&maze);
+
+    freeMaze(&maze);
     return 0;
 }
 

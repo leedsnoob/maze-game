@@ -4,7 +4,7 @@
 
 void loadandInitializeMaze(Maze_information *maze, const char *filename);
 
-void checkMaze(const Maze_information *maze);
+void checkMaze(Maze_information *maze);
 
 void initializePlayerPosition(player_information *player, const Maze_information *maze);
 

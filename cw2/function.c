@@ -57,7 +57,7 @@ void loadandInitializeMaze(Maze_information *maze, const char *filename) {
 
     for (int i = 0; i < maze->height; i++) {
         for (int j = 0; j < maze->width; j++) {
-            maze->maze[i][j] = ' ';
+            maze->maze[i][j] = '-1';
         }
     }
 
