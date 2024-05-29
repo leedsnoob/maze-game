@@ -2,10 +2,12 @@
 #define __maze__H_
 #define MAX_DIM 100
 #define MIN_DIM 5
-#define EXIT_SUCCESS 0
-#define EXIT_ARG_ERROR 1
-#define EXIT_FILE_ERROR 2
+#define SUCCESS 0
+#define ARG_ERROR 1
+#define FILE_ERROR 2
 #define EXIT_MAZE_ERROR 3
+#define UNSUCCESS 100
+#define ERROR_VALUE -1
 
 #define WALL '#'
 #define PATH ' '
