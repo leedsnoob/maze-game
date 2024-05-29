@@ -4,17 +4,21 @@
 #include <string.h>
 #include "function.h"
 
-void loadandInitializeMaze(Maze_information *maze, const char *filename) {
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
+void loadMazeFromFile(Maze_information *maze, const char *filename) {
+    FILE *maze = fopen(filename, "r");
+    if (maze == NULL) {
         fprintf(stderr, "Error opening file: %s\n", filename);
         exit(FILE_ERROR);
     }
 
-    int row = 0;
-    char line[MAX_DIM + 2]; // +2 for newline and null terminator
+    initializeMaze(maze, maze);
+    fclose(maze);
+}
 
-    // Determine the dimensions of the maze
+void initializeMaze(Maze_information *maze, FILE *file) {
+    int row = 0;
+    char line[MAX_DIM + 2];  // 一个是换行符一个是”0“
+
     while (fgets(line, sizeof(line), file)) {
         int len = strlen(line);
         if (line[len - 1] == '\n') {
@@ -55,17 +59,6 @@ void loadandInitializeMaze(Maze_information *maze, const char *filename) {
         }
     }
 
-    for (int i = 0; i < maze->height; i++) {
-        for (int j = 0; j < maze->width; j++) {
-            maze->maze[i][j] = '-1';
-        }
-    }
-
-    maze->start_x = ERROR_VALUE;
-    maze->start_y = ERROR_VALUE;
-    maze->end_x = ERROR_VALUE;
-    maze->end_y = ERROR_VALUE;
-
     row = 0;
     while (fgets(line, sizeof(line), file)) {
         int len = strlen(line);
@@ -74,56 +67,13 @@ void loadandInitializeMaze(Maze_information *maze, const char *filename) {
             len--;
         }
         for (int col = 0; col < maze->width; col++) {
-            char ch = line[col];
-            switch (ch) {
-                case WALL:
-                case PATH:
-                    maze->maze[row][col] = ch;
-                    break;
-                case START:
-                    if (maze->start_x != -1 || maze->start_y != -1) {
-                        fprintf(stderr, "Error: Multiple start points in the maze.\n");
-                        fclose(file);
-                        exit(MAZE_ERROR);
-                    }
-                    maze->maze[row][col] = ch;
-                    maze->start_x = col;
-                    maze->start_y = row;
-                    break;
-                case EXIT:
-                    if (maze->end_x != -1 || maze->end_y != -1) {
-                        fprintf(stderr, "Error: Multiple exit points in the maze.\n");
-                        fclose(file);
-                        exit(MAZE_ERROR);
-                    }
-                    maze->maze[row][col] = ch;
-                    maze->end_x = col;
-                    maze->end_y = row;
-                    break;
-                default:
-                    fprintf(stderr, "Error: Invalid character in maze file: %c\n", ch);
-                    fclose(file);
-                    exit(MAZE_ERROR);
-            }
+            maze->maze[row][col] = line[col];
         }
         row++;
     }
-
-    if (maze->start_x == -1 || maze->start_y == -1) {
-        fprintf(stderr, "Error: No start point in the maze.\n");
-        fclose(file);
-        exit(MAZE_ERROR);
-    }
-    if (maze->end_x == -1 || maze->end_y == -1) {
-        fprintf(stderr, "Error: No exit point in the maze.\n");
-        fclose(file);
-        exit(MAZE_ERROR);
-    }
-
-    fclose(file);
 }
 
-void checkMaze(const Maze_information *maze) {
+void checkMaze(Maze_information *maze) {
     int start_count = 0;
     int exit_count = 0;
     for (int i = 0; i < maze->height; i++) {
@@ -135,9 +85,13 @@ void checkMaze(const Maze_information *maze) {
                     break;
                 case START:
                     start_count++;
+                    maze->start_x = j;
+                    maze->start_y = i;
                     break;
                 case EXIT:
                     exit_count++;
+                    maze->end_x = j;
+                    maze->end_y = i;
                     break;
                 default:
                     fprintf(stderr, "Error: Invalid character in maze file: %c\n", ch);
@@ -155,8 +109,16 @@ void checkMaze(const Maze_information *maze) {
         fprintf(stderr, "Error: Maze must have exactly one exit point.\n");
         exit(MAZE_ERROR);
     }
-}
 
+    if (maze->start_x == ERROR_VALUE || maze->start_y == ERROR_VALUE) {
+        fprintf(stderr, "Error: No start point in the maze.\n");
+        exit(MAZE_ERROR);
+    }
+    if (maze->end_x == ERROR_VALUE || maze->end_y == ERROR_VALUE) {
+        fprintf(stderr, "Error: No exit point in the maze.\n");
+        exit(MAZE_ERROR);
+    }
+}
 void initializePlayerPosition(player_information *player, const Maze_information *maze) {
     player->x = maze->start_x;
     player->y = maze->start_y;
@@ -181,15 +143,15 @@ void showMap(const Maze_information *maze, const player_information *player) {
 }
 
 int isMoveValid(const Maze_information *maze, int newX, int newY) {
-    // Check if the new position is within the bounds of the maze
+   
     if (newX < 0 || newX >= maze->width || newY < 0 || newY >= maze->height) {
-        return 0; // Invalid move: out of bounds
+        return 0; 
     }
-    // Check if the new position is a wall
+
     if (maze->maze[newY][newX] == WALL) {
-        return 0; // Invalid move: hitting a wall
+        return 0; 
     }
-    return 1; // Valid move
+    return 1; 
 }
 
 void updatePlayerPosition(player_information *player, int newX, int newY) {

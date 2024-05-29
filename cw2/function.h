@@ -2,7 +2,9 @@
 #define __FUNCTION_H__
 #include "maze.h"
 
-void loadandInitializeMaze(Maze_information *maze, const char *filename);
+void loadMazeFromFile(Maze_information *maze, const char *filename);
+
+void initializeMaze(Maze_information *maze, FILE *file);
 
 void checkMaze(Maze_information *maze);
 
