@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include "maze_generator.h"
-// 部分思路来自 https://blog.csdn.net/m0_75008697/article/details/132566835
-// 算法思路来自 https://blog.csdn.net/weixin_45218342/article/details/134369330
-//哈曼吨距离 https://blog.csdn.net/weixin_56154577/article/details/136388934
 
 int main(int argc, char *argv[]) {
     if (argc != 4) {
