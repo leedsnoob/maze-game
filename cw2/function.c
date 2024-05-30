@@ -67,7 +67,7 @@ int initializeMaze(Maze_information *maze, FILE *file) {
         }
     }
 
-    // 重新读取文件，将数据存储到动态分配的数组中
+    // 将数据存储到内存
     rewind(file);
     row = 0;
     while (fgets(line, sizeof(line), file) && row < maze->height) {
@@ -89,7 +89,7 @@ int checkMaze(Maze_information *maze) {
     maze->start_y = ERROR_VALUE;
     maze->end_x = ERROR_VALUE;
     maze->end_y = ERROR_VALUE;
-    //遍历迷宫
+    //检查
     for (int i = 0; i < maze->height; i++) {
         for (int j = 0; j < maze->width; j++) {
             char ch = maze->maze[i][j];

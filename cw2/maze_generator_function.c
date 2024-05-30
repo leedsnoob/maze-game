@@ -34,6 +34,7 @@ void save_maze(char **maze, int width, int height, const char *filename) {
     fclose(file);
 }
 
+
 void prim_maze(int width, int height, const char *filename) {
     char **maze = initialize_maze(width, height);
     int start_x = (rand() % (width / 2)) * 2;
