@@ -1,6 +1,6 @@
 
-#ifndef __maze__H_
-#define __maze__H_
+#ifndef __mazeg__H_
+#define __mazeg__H_
 #define MAX_DIM 100
 #define MIN_DIM 5
 #define SUCCESS 0
@@ -14,7 +14,7 @@
 #define PATH ' '
 #define START 'S'
 #define EXIT 'E'
-#define PLAYER 'X'
+
 
 typedef struct{
     int width;
@@ -26,10 +26,6 @@ typedef struct{
     char**maze;
 } Maze_information;
 
-typedef struct 
-{
-    int x;
-    int y;
-} player_information;
+
 
 #endif

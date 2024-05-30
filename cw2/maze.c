@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "maze.h"
@@ -17,8 +18,7 @@ int main(int argc, char *argv[]) {
     
     Maze_information maze;
     player_information player;
-    loadMazeFromFile(&maze, argv[1]);  // 加载迷宫文件  // This involves reading the walls, paths, start and end points of the maze.
-    checkMaze(&maze); // The width and height of the checking maze are not the same as the width and height of the loading maze
+    loadMazeFromFile(&maze, argv[1]);
     initializePlayerPosition(&player, &maze); // Initialize player placement, placing the player at the beginning of the maze.
  int inputChar;
     do {
@@ -67,4 +67,3 @@ int main(int argc, char *argv[]) {
     freeMaze(&maze);
     return 0;
 }
-
