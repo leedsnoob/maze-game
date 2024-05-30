@@ -1,4 +1,3 @@
-
 #ifndef __maze__H_
 #define __maze__H_
 #define MAX_DIM 100

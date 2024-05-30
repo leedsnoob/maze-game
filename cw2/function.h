@@ -18,7 +18,6 @@ void updatePlayerPosition(player_information *player, int newX, int newY);
 
 int checkIfExitReached(const player_information *player, const Maze_information *maze);
 
-
 void freeMaze(Maze_information *maze);
 
 #endif
