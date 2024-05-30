@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "list.h"
-
+//新的墙壁
 void add_to_list(Node **head, int x, int y) {
     Node *new_node = (Node *)malloc(sizeof(Node));
     new_node->cell.x = x;
@@ -8,7 +8,7 @@ void add_to_list(Node **head, int x, int y) {
     new_node->next = *head;
     *head = new_node;
 }
-
+//移除已经挖开的
 void remove_from_list(Node **head, int x, int y) {
     Node *temp = *head, *prev = NULL;
     while (temp != NULL && (temp->cell.x != x || temp->cell.y != y)) {
@@ -24,7 +24,7 @@ void remove_from_list(Node **head, int x, int y) {
         free(temp);
     }
 }
-
+//还要多少
 int list_length(Node *head) {
     int length = 0;
     while (head != NULL) {
@@ -33,7 +33,7 @@ int list_length(Node *head) {
     }
     return length;
 }
-
+//随机选择一个待处理的墙壁单元格
 Cell get_random_cell(Node *head) {
     int length = list_length(head);
     int index = rand() % length;
@@ -42,7 +42,7 @@ Cell get_random_cell(Node *head) {
     }
     return head->cell;
 }
-
+//检查其单元格
 Cell* get_neighbors(int x, int y, int width, int height, int *count) {
     Cell *neighbors = (Cell *)malloc(4 * sizeof(Cell));
     *count = 0;
